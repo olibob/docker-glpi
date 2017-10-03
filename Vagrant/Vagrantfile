@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+INSTANCE_NAME_PREFIX = "swarm"
+VB_NUM_CPU = 2
+VB_NUM_MEM = 1024
+BOX = "fedora/26-cloud-base"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  (1..1).each do |n|
+    vmName = "%s-%02d" % [INSTANCE_NAME_PREFIX, n]
+    config.vm.define "#{vmName}" do |machine|
+      machine.vm.box = "#{BOX}"
+      machine.vm.box_check_update = false
+
+			machine.vm.network "public"
+      machine.vm.hostname = "#{vmName}"
+
+      #config.vm.synced_folder ".", "/vagrant", disabled: true
+      #machine.vm.synced_folder "/Users", "/Users"
+      machine.ssh.insert_key = false
+
+      machine.vm.provider "virtualbox" do |vb|
+        vb.cpus = VB_NUM_CPU
+        vb.memory = VB_NUM_MEM
+        vb.name = "#{vmName}"
+      end
+    end
+  end
+end

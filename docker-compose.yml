@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  glpi:
+    image: bob/glpi:001
+    ports:
+    - "8080:80"
+  db:
+    image: mariadb:10.2.9
+    environment:
+      MYSQL_ROOT_PASSWORD: admin*
+      MYSQL_DATABASE: glpi
+    volumes:
+      - type: volume
+        source: glpidbvolume
+        target: /var/lib/mysql
+volumes:
+  glpidbvolume:
