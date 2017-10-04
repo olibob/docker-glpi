@@ -45,7 +45,7 @@ RUN sed -i 's/nodaemon=false/nodaemon=true/' /etc/supervisord.conf
 ADD conf/htaccess /var/www/html/files/.htaccess
 
 # Alter listening port
-RUN sed -i 's/listen.*80;/listen 9000;/' /etc/nginx/conf.d/default.conf
+RUN sed -i 's/Listen 80/Listen 9000/' /etc/httpd/conf/httpd.conf
 
 EXPOSE 9000
 ENV PORT 9000
