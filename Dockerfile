@@ -44,7 +44,11 @@ RUN sed -i 's/nodaemon=false/nodaemon=true/' /etc/supervisord.conf
 # Alter .htaccess for apache 2.4
 ADD conf/htaccess /var/www/html/files/.htaccess
 
-EXPOSE 80
+# Alter listening port
+RUN sed -i 's/listen.*80;/listen 9000;/' /etc/nginx/conf.d/default.conf
+
+EXPOSE 9000
+ENV PORT 9000
 
 # Simple startup script to avoid some issues observed with container restart
 
