@@ -26,7 +26,9 @@ cd /var/www/html/plugins && tar xvjf /tmp/glpi-fusioninventory-9.2.1.0.tar.bz2 &
 chown -R apache.apache . && rm -f remove.txt glpi-fusioninventory-9.2.1.0.tar.bz2 /tmp/glpi-fusioninventory-9.2.1.0.tar.bz2
 
 # Alter php.ini configuration
-RUN sed -i 's/max_execution_time = 30/max_execution_time = 600/' /etc/php.ini
+RUN sed -i 's/max_execution_time = 30/max_execution_time = 600/' /etc/php.ini && \
+	sed -i 's/;date.timezone =/;date.timezone = Europe/Paris/' /etc/php.ini
+
 
 # Alter httpd.conf to allow htaccess
 ADD conf/httpd.conf /etc/httpd/conf/httpd.conf
