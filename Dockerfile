@@ -13,7 +13,8 @@ RUN yum --setopt=tsflags=nodocs update -y && \
 		php-mbstring php-cli php-xml php-gd php-imap php-ldap \
 		php-opcache php-pecl-apcu php-xmlrpc && \
 		yum install -y supervisor cronie && \
-		yum clean all && rm -rf /var/cache/yum/*
+		yum clean all && rm -rf /var/cache/yum/* &&\
+		ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
 # Get GLPI
 RUN cd /tmp && curl -L -O https://github.com/glpi-project/glpi/releases/download/9.2/glpi-9.2.tgz && \
@@ -50,8 +51,5 @@ RUN sed -i 's/Listen 80/Listen 9000/' /etc/httpd/conf/httpd.conf
 
 EXPOSE 9000
 ENV PORT 9000
-
-# Simple startup script to avoid some issues observed with container restart
-
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
